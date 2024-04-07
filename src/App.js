@@ -1,8 +1,13 @@
 import "./App.css";
+import Banner from "./components/Banner";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <h1 className="text-3xl text-gray-600 font-bold underline">Hello World!</h1>
+    <>
+      <NavBar />
+      <Banner />
+    </>
   );
 }
 
