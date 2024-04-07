@@ -9,3 +9,7 @@ Features ->
 5. pagination will be implimented to get update from one page to another to get update data other movies.
 6. searching other movies.
 7. we will deploying this application on Netlify.
+
+
+Tailwind CSS -> 
+Tailwind is a CSS framework where you will get already written css classes which you can use to design your application.
