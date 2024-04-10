@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Pagination from "./Pagination";
 
 function Movies() {
   const [MyMovies, setMovies] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
+
+  const onNext = () => {
+    setPageNum(pageNum + 1);
+  };
+
+  const onPrev = () => {
+    if (pageNum > 1) {
+      setPageNum(pageNum - 1);
+    }
+  };
+
   useEffect(() => {
     (function () {
       axios
         .get(
-          `https://api.themoviedb.org/3/discover/movie?api_key=1c027109a0bf512115ee0df1962ab543`
+          `https://api.themoviedb.org/3/discover/movie?api_key=1c027109a0bf512115ee0df1962ab543&page=${pageNum}`
         )
         .then((res) => {
           setMovies(res.data.results);
           console.log(res.data.results);
         });
     })();
-  }, []);
+  }, [pageNum]);
   console.log(MyMovies);
 
   return (
@@ -24,6 +37,7 @@ function Movies() {
         {MyMovies.map((movie) => {
           return (
             <div
+              key={movie.id}
               className="w-[160px] h-[38vh] bg-center bg-cover rounded=xl m-4 md-h[40vh]"
               style={{
                 backgroundImage: `URL(https://image.tmdb.org/t/p/original/t/p/w500/${movie.poster_path})`,
@@ -35,6 +49,13 @@ function Movies() {
             </div>
           );
         })}
+      </div>
+      <div>
+        <Pagination
+          pageNumProp={pageNum}
+          onNextProp={onNext}
+          onPrevProp={onPrev}
+        />
       </div>
     </div>
   );
