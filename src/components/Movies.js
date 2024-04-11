@@ -5,6 +5,31 @@ import Pagination from "./Pagination";
 function Movies() {
   const [MyMovies, setMovies] = useState([]);
   const [pageNum, setPageNum] = useState(1);
+  const [watchList, setWatchList] = useState([]);
+  const [hovered, setHovered] = useState("");
+
+  // Watchlist handlers
+  const addToWatchList = (movie) => {
+    const newWatchList = [...watchList, movie];
+    setWatchList(newWatchList);
+  };
+
+  //removeMovie from watchlist
+  const removeFromWatchList = (movie) => {
+    const filteredWatchList = watchList.filter((m) => {
+      return m.id !== movie.id;
+    });
+    setWatchList(filteredWatchList);
+  };
+
+  // hovering on movie cart
+  const showButton = (id) => {
+    setHovered(id);
+  };
+
+  const hideButton = () => {
+    setHovered();
+  };
 
   const onNext = () => {
     setPageNum(pageNum + 1);
@@ -28,7 +53,8 @@ function Movies() {
         });
     })();
   }, [pageNum]);
-  console.log(MyMovies);
+  // console.log(MyMovies);
+  console.log(watchList);
 
   return (
     <div>
@@ -37,12 +63,24 @@ function Movies() {
         {MyMovies.map((movie) => {
           return (
             <div
+              onMouseOver={() => showButton(movie.id)}
+              onMouseLeave={() => hideButton(movie.id)}
               key={movie.id}
               className="w-[160px] h-[38vh] bg-center bg-cover rounded=xl m-4 md-h[40vh]"
               style={{
                 backgroundImage: `URL(https://image.tmdb.org/t/p/original/t/p/w500/${movie.poster_path})`,
               }}
             >
+              <div
+                className="text-2xl p-2  rounded-2xl right-2 bottom-2 "
+                style={{ display: hovered === movie.id ? "block" : "none" }}
+              >
+                {watchList.includes(movie) === false ? (
+                  <div onClick={() => addToWatchList(movie)}>✅</div>
+                ) : (
+                  <div onClick={() => removeFromWatchList(movie)}>❌</div>
+                )}
+              </div>
               <div className="text-white font-bold text-center w-full bg-gray-900 bg-opacity-60">
                 {movie.title}
               </div>
