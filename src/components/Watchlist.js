@@ -166,7 +166,7 @@ function WatchList() {
       <div className="text-center">
         <input
           type="text"
-          className="border bg-gray-200 border-4 text-center p-1 m-2"
+          className=" bg-gray-200 border-4 text-center p-1 m-2"
           placeholder="Search for Movies"
           value={searchStr}
           onChange={(e) => setSearchStr(e.target.value)}
